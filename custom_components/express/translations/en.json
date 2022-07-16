@@ -1,0 +1,18 @@
+{
+    "config": {
+        "step": {
+            "user": {
+                "description": "注意：请自行抓包获取认证信息 \n\n 项目: https://github.com/tidaybreak/hass-expores",
+                "data": {
+                    "name": "天气名称",
+                    "idniaoxiang": "鸟箱cookie",
+                    "idxitu": "喜兔unionId"
+                }
+            }
+        },
+        "error": {},
+        "abort": {
+            "single_instance_allowed": "仅允许单个配置."
+        }
+    }
+}

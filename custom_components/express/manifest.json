@@ -1,0 +1,10 @@
+{
+  "domain": "express",
+  "name": "\u5feb\u9012",
+  "version": "1.0",
+  "config_flow": true,
+  "documentation": "https://github.com/tidaybreak/hass-expres",
+  "requirements": [],
+  "dependencies": [],
+  "codeowners": []
+}
