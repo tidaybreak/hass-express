@@ -3,7 +3,7 @@
   "name": "\u5feb\u9012",
   "version": "1.0",
   "config_flow": true,
-  "documentation": "https://github.com/tidaybreak/hass-expres",
+  "documentation": "https://github.com/tidaybreak/hass_custom_components",
   "requirements": [],
   "dependencies": [],
   "codeowners": []

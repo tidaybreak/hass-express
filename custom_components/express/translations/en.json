@@ -1,18 +1,34 @@
 {
     "config": {
         "step": {
-            "user": {
-                "description": "注意：请自行抓包获取认证信息 \n\n 项目: https://github.com/tidaybreak/hass-expores",
+            "info": {
+                "description": "注意：请自行抓包获取认证信息 \n\n 项目: https://github.com/tidaybreak/hass_custom_components",
                 "data": {
-                    "name": "天气名称",
-                    "idniaoxiang": "鸟箱cookie",
-                    "idxitu": "喜兔unionId"
+                    "name": "快递企业",
+                    "auth": "认证信息"
                 }
             }
         },
         "error": {},
         "abort": {
+            "success": "更新成功",
+            "not_support_express": "不支持的快递",
             "single_instance_allowed": "仅允许单个配置."
+        }
+    },
+    "options": {
+        "abort": {
+            "success": "更新成功"
+        },
+        "error": {
+        },
+        "step": {
+            "init": {
+                "data": {
+                },
+                "description": "",
+                "title": "更新API认证信息"
+            }
         }
     }
 }

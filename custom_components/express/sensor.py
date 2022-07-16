@@ -15,13 +15,15 @@ import voluptuous as vol
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.event import async_track_time_interval
 
+from homeassistant.components.sensor import DEVICE_CLASSES, STATE_CLASSES, SensorEntity
 from homeassistant.helpers.entity import Entity
 from homeassistant.const import (ATTR_ATTRIBUTION, TEMP_CELSIUS, CONF_NAME)
 from homeassistant.util import Throttle
 import homeassistant.helpers.config_validation as cv
 import homeassistant.util.dt as dt_util
 
-from .const import VERSION, ROOT_PATH, TELUSERS
+from .const import VERSION, ROOT_PATH, TELUSERS, DOMAIN
+from .express_device import ExpressDevice
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -39,7 +41,7 @@ ATTR_hourly_express = "hourly_express"
 ATTR_SUGGESTION = "suggestion"
 ATTR_CUSTOM_UI_MORE_INFO = "custom_ui_more_info"
 
-ATTRIBUTION = "来自鸟箱数据"
+ATTRIBUTION = ""
 
 ATTR_FORECAST_PROBABLE_PRECIPITATION = 'probable_precipitation'
 
@@ -53,10 +55,11 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     name = config.get(CONF_NAME)
     expres = config.get("name")
     auth = config.get("auth")
+    #_LOGGER.error("-----------------:%s", hass.data)
+    #coordinator = hass.data[DOMAIN][config_entry.entry_id]["coordinator"]
 
-    
     #_LOGGER.error("-----------------:%s", name)
-    if epores == '鸟箱':
+    if expres == '鸟箱':
         data = NiaoXiangData(hass, auth)
         await data.async_update(dt_util.now())  
         async_track_time_interval(hass, data.async_update, TIME_BETWEEN_UPDATES)
@@ -68,12 +71,15 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
         async_add_entities([ExpresXiTu(data, name)], True)
 
 
-class ExpresNiaoXiang(Entity):
+class ExpresNiaoXiang(SensorEntity):
     """Representation of a weather condition."""
 
+    #def __init__(self, express_device, coordinator, roller, object_id):
     def __init__(self, roller, object_id):
         """Initialize the  weather."""
+        #super().__init__(tesla_device, coordinator)
         self._object_id = object_id
+        self._unique_id = object_id
         self._total = None
         self._free_hour = 0
         self._free_minute = 0
@@ -268,7 +274,7 @@ class NiaoXiangData(object):
 
 
 
-class ExpresXiTu(Entity):
+class ExpresXiTu(SensorEntity):
     """Representation of a weather condition."""
 
     def __init__(self, roller, object_id):
@@ -421,7 +427,7 @@ class XiTuData(object):
             return
         elif isinstance(result, dict) and result["statusCode"] != "404":
             self._total = -1
-            _LOGGER.error("Error API return, code=%s", result["code"])
+            _LOGGER.error("Error API return, msg=%s", result["message"])
             return
 
         result = result['result']['items']
